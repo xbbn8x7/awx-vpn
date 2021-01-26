@@ -1,0 +1,60 @@
+---
+- hosts: 192.168.2.92
+  gather_facts: no
+  user: steve
+  connection: local 
+  become: yes
+  become_method: enable
+
+  tasks:
+
+   - name: Build access lists
+     asa_config:
+       lines:
+         - access-list l2l_list94 extended permit ip 10.1.1.0 255.255.255.0 172.5.1.0 255.255.255.0
+
+   - name: Build crypto maps
+     asa_config:
+       lines:
+         - crypto map outside_map94 1 match address l2l_list94
+         - crypto map outside_map94 1 set peer 20.1.1.2
+         - crypto map outside_map94 1 set ikev2 ipsec-proposal AES256 
+         - crypto map outside_map94 interface outside
+
+   - name: Build tunnel groups
+     asa_config:
+       lines:
+         - tunnel-group 20.1.1.2 type ipsec-l2l 
+         - tunnel-group 20.1.1.2 ipsec-attributes
+         - ikev2 remote-authentication pre-shared-key cisco
+         - ikev2 local-authentication pre-shared-key cisco
+
+   - name: Build object groups
+     asa_config:
+       lines:
+         - object network site1725
+         - subnet 172.5.1.0 255.255.255.0
+
+   - name: Build NAT
+     asa_config:
+       lines:
+         - nat (inside,outside) source static site10 site10 destination static site1725 site1725 no-proxy-arp route-lookup
+
+   - name: Build BGP
+     asa_config:
+       lines:
+         - neighbor 20.1.1.2 remote-as 400
+         - neighbor 20.1.1.2 activate
+       parents:
+         - router bgp 100
+         - address-family ipv4 unicast
+
+   - name: Allow traffic into the inside interface
+     asa_config:
+       lines:
+         - access-list allow-inside extended permit ip 10.1.1.0 255.255.255.0 172.5.1.0 255.255.255.0 log
+         - access-group allow-inside in interface inside
+
+   - name: Save
+     asa_config:
+       save: yes 

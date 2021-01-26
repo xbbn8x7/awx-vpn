@@ -1,0 +1,62 @@
+---
+- hosts: 192.168.2.92
+  gather_facts: no
+  user: steve
+  connection: local 
+  become: yes
+  become_method: enable
+  vars_files:
+    - /var/lib/awx/projects/vpn/clientData
+
+  tasks:
+
+
+
+   - name: Remove access lists
+     asa_config:
+       lines:
+         - "clear config access-list {{ client_name }} extended permit ip 10.1.1.0 255.255.255.0 {{ app_net }} {{ app_net_mask }}" 
+
+   - name: Remove crypto maps
+     asa_config:
+       lines:
+         - "no crypto map outside_map_rem {{ client_id }}" 
+
+   - name: Remove tunnel groups
+     asa_config:
+       lines:
+         - "clear config tunnel-group {{ client_pub_ip }}" 
+
+   - name: Remove NAT
+     asa_config:
+       lines:
+         - "no nat (inside,outside) source static site10 site10 destination static {{ client_name }} {{ client_name }} no-proxy-arp route-lookup"
+
+
+   - name: Remove object groups
+     asa_config:
+       lines:
+         - "no object network {{ client_name }}"
+
+   - name: Remove BGP
+     asa_config:
+       lines:
+         - "no neighbor {{ client_pub_ip }} remote-as {{ as }}"
+       parents:
+         - router bgp 100
+         - address-family ipv4 unicast
+
+   - name: Remove access list for traffic into the inside interface
+     asa_config:
+       lines:
+         - "clear config access-list allow-inside extended permit ip 10.1.1.0 255.255.255.0 {{ app_net }} {{ app_net_mask }} log"
+
+   - name: Remove filter for client route
+     asa_config:
+       lines:
+         - "no prefix-list FILTER deny {{ app_net_data }}" 
+
+
+   - name: Save
+     asa_config:
+       save: yes 

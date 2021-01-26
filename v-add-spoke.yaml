@@ -1,0 +1,62 @@
+---
+- hosts: 192.168.2.92
+  gather_facts: no
+  user: steve
+  connection: local 
+  become: yes
+  become_method: enable
+  vars_files:
+    - /var/lib/awx/projects/vpn/clientData
+
+  tasks:
+
+   - name: Build object group
+     asa_config:
+       lines:
+         - "object network {{ client_name }}"
+         - "subnet {{ app_net }} {{ app_net_mask }}" 
+
+   - name: Build access lists
+     asa_config:
+       lines:
+         - "access-list {{ client_name }} extended permit ip object EIS object {{ client_name }}" 
+
+   - name: Build crypto maps
+     asa_config:
+       lines:
+         - "crypto map outside_map_rem {{ client_id }} match address {{ client_name }}"
+         - "crypto map outside_map_rem {{ client_id }} set peer {{ client_pub_ip }}"
+         - "crypto map outside_map_rem {{ client_id }} set ikev2 ipsec-proposal AES256" 
+
+   - name: Build tunnel groups
+     asa_config:
+       lines:
+         - "tunnel-group {{ client_pub_ip }} type ipsec-l2l" 
+         - "tunnel-group {{ client_pub_ip }} ipsec-attributes"
+         - "ikev2 remote-authentication pre-shared-key {{ psk_data }}"
+         - "ikev2 local-authentication pre-shared-key {{ psk_data }}"
+
+   - name: Build NAT
+     asa_config:
+       lines:
+         - "nat (inside,outside) source static EIS EIS destination static {{ client_name }} {{ client_name }} no-proxy-arp route-lookup"
+
+   - name: Build BGP
+     asa_config:
+       lines:
+         - "neighbor {{ client_pub_ip }} remote-as {{ bgp_as }}"
+         - "neighbor {{ client_pub_ip }} filter-list 1 out"
+         - "neighbor {{ client_pub_ip }} activate"
+       parents:
+         - router bgp 100
+         - address-family ipv4 unicast
+
+   - name: Allow traffic into the inside interface
+     asa_config:
+       lines:
+         - "access-list allow-inside extended permit ip object EIS object {{ client_name }}"
+         - access-group allow-inside in interface inside
+
+   - name: Save
+     asa_config:
+       save: yes 

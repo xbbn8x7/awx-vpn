@@ -1,0 +1,19 @@
+---
+- hosts: 192.168.2.92
+  gather_facts: no
+  user: steve
+  connection: local 
+  become: yes
+  become_method: enable
+
+  tasks:
+
+   - name: Copy hub-noremotes 
+     asa_command:
+       commands:
+         - copy /noconfirm hub-noremotes startup-config
+
+   - name: send reload
+     asa_command:
+       commands:
+         - reload noconfirm
