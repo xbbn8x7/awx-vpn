@@ -8,7 +8,7 @@
 
   tasks:
 
-   - name: Copy hub-noremotes 
+   - name: Reset hub so no remote vpns exist 
      asa_command:
        commands:
          - copy /noconfirm hub-noremotes startup-config
