@@ -1,6 +1,6 @@
 ---
 - hosts: 10.148.254.12
-  gather_facts: no
+  gather_facts: yes
   connection: local 
   become: yes
   become_method: enable
