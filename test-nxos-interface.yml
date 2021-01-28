@@ -1,0 +1,18 @@
+---
+- hosts: 10.148.254.12
+  gather_facts: no
+  connection: local 
+  become: yes
+  become_method: enable
+
+  tasks:
+
+    - name: ENSURE INTERFACE IS LAYER 3 WITH DESCR
+         nxos_interface: interface=Eth1/4 description='Configured by Ansible' mode=layer3 host={{ inventory_hostname }}
+         register: data
+
+       - name: TEST 1
+         assert:
+           that:
+             - data.end_state.description == 'Configured by Ansible'
+             - data.end_state.mode == 'layer3'
