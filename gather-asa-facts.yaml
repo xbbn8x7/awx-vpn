@@ -1,5 +1,5 @@
 ---
-- hosts: 192.168.2.92
+- hosts: 10.148.254.23
   gather_facts: no
   user: steve
   connection: local 
