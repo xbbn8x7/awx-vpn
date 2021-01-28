@@ -1,7 +1,6 @@
 ---
 - hosts: 10.148.254.23
   gather_facts: no
-  user: steve
   connection: local 
   become: yes
   become_method: enable
@@ -9,5 +8,5 @@
   tasks:
 
    - name: Gather all legacy facts 
-     asa_facts:
+     cisco.asa.asa_facts:
        gather_subset: all
