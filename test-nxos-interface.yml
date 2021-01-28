@@ -8,7 +8,7 @@
   tasks:
 
     - name: ENSURE INTERFACE IS LAYER 3 WITH DESCR
-         nxos_interface: interface=Eth1/4 description='Configured by Ansible' mode=layer3 host='10.148.254.12'
+         nxos_interface: interface=Eth1/14 description='Configured by Ansible' mode=layer3
          register: data
 
        - name: TEST 1
