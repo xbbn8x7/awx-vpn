@@ -1,0 +1,66 @@
+---
+- hosts: 192.168.2.92
+  gather_facts: no
+  user: steve
+  connection: local 
+  become: yes
+  become_method: enable
+  vars_files:
+    - /var/lib/awx/projects/vpn/clientData
+
+  tasks:
+
+   - name: Build object group
+     asa_config:
+       lines:
+         - "object network {{ client_name }}"
+         - "subnet {{ app_net }} {{ app_net_mask }}" 
+
+   - name: Build access lists
+     asa_config:
+       lines:
+         - "access-list {{ client_name }} extended permit ip object EIS object {{ client_name }}" 
+
+   - name: Build tunnel interface
+     asa_config:
+       lines:
+         - "interface Tunnel 555"
+         - "nameif VTI-{{ client_name }}"
+         - "ip address 169.254.220.1 255.255.255.252"
+         - "tunnel source interface outside"
+         - "tunnel destination {{ client_pub_ip }}"
+         - "tunnel mode ipsec ipv4"
+         - "tunnel protection ipsec profile PROFILE1" 
+
+   - name: Build tunnel groups
+     asa_config:
+       lines:
+         - "tunnel-group {{ client_pub_ip }} type ipsec-l2l" 
+         - "tunnel-group {{ client_pub_ip }} ipsec-attributes"
+         - "ikev2 remote-authentication pre-shared-key {{ psk_data }}"
+         - "ikev2 local-authentication pre-shared-key {{ psk_data }}"
+
+   - name: Build NAT
+     asa_config:
+       lines:
+         - "nat (inside,outside) source static EIS EIS destination static {{ client_name }} {{ client_name }} no-proxy-arp route-lookup"
+
+   - name: Build BGP
+     asa_config:
+       lines:
+         - "neighbor {{ client_pub_ip }} remote-as {{ bgp_as }}"
+         - "neighbor {{ client_pub_ip }} filter-list 1 out"
+         - "neighbor {{ client_pub_ip }} activate"
+       parents:
+         - router bgp 100
+         - address-family ipv4 unicast
+
+   - name: Allow traffic into the inside interface
+     asa_config:
+       lines:
+         - "access-list allow-inside extended permit ip object EIS object {{ client_name }}"
+         - access-group allow-inside in interface inside
+
+   - name: Save
+     asa_config:
+       save: yes 
