@@ -1,12 +1,28 @@
 ---
 - hosts: 10.148.254.23
-  gather_facts: no
-  connection: local 
+  gather_facts: yes
+  user: nmsadmin
+  connection: local
   become: yes
   become_method: enable
 
   tasks:
 
-   - name: Gather all legacy facts 
-     cisco.asa.asa_facts:
-       gather_subset: all
+   - name: Gather all legacy facts
+     asa_config:
+       lines:
+         - show version
+         - show inventory
+
+   - name: show run
+     asa_command:
+       commands: show run
+     register: run
+     become: yes
+     tags:
+       - show_run
+
+   - debug:
+       msg: "{{run.stdout[0]}}"
+     tags:
+       - show_run
