@@ -13,6 +13,7 @@
     - name: Check to see if device is ready
       panos_op:
         ip_address: '10.70.12.13'
+        password: '{{ password | default(omit) }}'
         cmd: 'show chassis-ready'
 #      changed_when: false
       register: result
