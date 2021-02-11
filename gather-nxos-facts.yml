@@ -8,9 +8,9 @@
   tasks:
 
     - name Get nxos facts
-      cisco.nxos.nxos_facts:
+      nxos_facts:
         gather_subset: all
     - name: Gather only the config and default facts
-      cisco.nxos.nxos_facts:
+      nxos_facts:
         gather_subset:
         - config
