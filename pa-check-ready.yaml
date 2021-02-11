@@ -4,6 +4,10 @@
   vars:
     device:
       ip_address: 10.70.12.13
+      username: '{{ username | default(omit) }}'
+      password: '{{ password | default(omit) }}'
+      api_key: '{{ api_key | default(omit) }}'
+
 
   tasks:
     - name: Check to see if device is ready
