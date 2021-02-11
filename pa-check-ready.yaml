@@ -1,10 +1,14 @@
 - hosts: 10.70.12.13
   connection: local
 
+ vars:
+    device:
+      ip_address: 10.70.12.13
 
   tasks:
     - name: Check to see if device is ready
       panos_op:
+        provier: '{{ device }}'
         cmd: 'show chassis-ready'
 #      changed_when: false
 #      register: result
