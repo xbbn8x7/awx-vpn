@@ -4,7 +4,7 @@
 
   tasks:
     - name: Check to see if device is ready
-      paloaltonetworks.panos.panos_op:
+      panos_op:
         cmd: 'show chassis-ready'
       changed_when: false
       register: result
