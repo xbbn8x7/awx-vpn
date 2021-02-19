@@ -1,5 +1,5 @@
 ---
-- hosts: 10.70.1.4
+- hosts: NXOS
   gather_facts: yes
   connection: local 
   become: yes
