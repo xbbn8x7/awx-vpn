@@ -11,7 +11,7 @@
 
   tasks:
     - name: Check to see if device is ready
-      panos_check:
+      panos_op:
         cmd: 'show chassis-ready'
 #      changed_when: false
       register: result
