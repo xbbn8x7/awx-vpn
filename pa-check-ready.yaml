@@ -11,12 +11,10 @@
 
   tasks:
     - name: Check to see if device is ready
-      panos_op:
-        ip_address: '10.70.12.13'
-        password: 'xxxxx'
+      panos_check:
         cmd: 'show chassis-ready'
 #      changed_when: false
       register: result
-#      until: result is not failed and (result.stdout | from_json).response.result == 'yes'
-#      retries: 50
-#      delay: 30
+      until: not result|failed
+      retries: 50
+      delay: 30
