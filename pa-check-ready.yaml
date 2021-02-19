@@ -1,4 +1,4 @@
-- hosts: 10.70.12.13
+- hosts: PaloAlto
   connection: local
 
 #  vars:
