@@ -7,7 +7,7 @@
 
   tasks:
 
-    - name Get nxos facts
+    - name: Get nxos facts
       nxos_command:
         commands: show version
       
