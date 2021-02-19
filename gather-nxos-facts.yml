@@ -8,9 +8,6 @@
   tasks:
 
     - name Get nxos facts
-      nxos_facts:
-        gather_subset: all
-    - name: Gather only the config and default facts
-      nxos_facts:
-        gather_subset:
-        - config
+      nxos_command:
+        commands: show version
+      
