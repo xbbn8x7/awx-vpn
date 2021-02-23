@@ -23,5 +23,5 @@
     - name: Check 2
       panos_check:
         ip_address: "10.148.254.20"
-        password: "NiS01801"
+ 
       register: result
