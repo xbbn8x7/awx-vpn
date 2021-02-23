@@ -1,0 +1,27 @@
+---
+- hosts: 192.168.2.92
+  user: steve
+  connection: local
+  become: yes
+  become_method: enable
+  gather_facts: false
+
+  tasks:
+
+    - name: Build object group
+      asa_config:
+         lines:
+          - "object-group network newClient"
+
+    - name: Add networks
+      asa_config:
+         lines:
+           - "network-object {{ item }}"
+         parents:
+           - object-group network newClient
+
+      loop: "{{ lookup('file','subnets.txt').splitlines() }}"
+
+             ############# THE FOLLOWING LINE WORKS 2/23 ############################################
+             #      loop: "{{ lookup('file','varfil2.yml') | regex_findall('(?m)^subnet: (.+)') }}" 
+             ########################################################################################
