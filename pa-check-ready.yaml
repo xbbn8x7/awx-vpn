@@ -14,6 +14,7 @@
     - name: Check to see if device is ready
       panos_op:
         ip_address: 10.148.254.20
+        password: "xxxxx"
         cmd: 'show chassis-ready'
 ##      changed_when: false
       register: result
