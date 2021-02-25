@@ -1,5 +1,5 @@
 ---
-- hosts: 10.148.254.23
+- hosts: ASA
   gather_facts: yes
   user: nmsadmin
   connection: local
