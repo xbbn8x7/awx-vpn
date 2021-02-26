@@ -22,7 +22,7 @@
         var: result
         verbosity: 2
 
-    - name: list interfaces
+    - name: list of interfaces
       panos_op:
         ip_address: 10.148.254.20
 #        username: "nmsadmin"
