@@ -1,0 +1,35 @@
+---
+- hosts: 10.148.254.20
+  connection: local
+
+  roles:
+    - role: PaloAltoNetworks.paloaltonetworks
+
+  tasks:
+    - name: check device readiness
+      panos_op:
+        ip_address: 10.148.254.20
+#        username: "nmsadmin"
+#        password: ""
+        #        cmd: 'show interface all'
+        cmd: 'show chassis-ready'
+      changed_when: false
+      register: result
+      until: result is not failed and (result.stdout | from_json).response.result == 'yes'
+      retries: 3
+      delay: 10
+    - debug:
+        var: result
+        verbosity: 2
+
+    - name: list interfaces
+      panos_op:
+        ip_address: 10.148.254.20
+#        username: "nmsadmin"
+#        password: ""
+        cmd: 'show interface all'
+      register: int_result
+
+    - debug:
+        var: int_result
+        verbosity: 2

@@ -1,0 +1,45 @@
+client_name: NewCo
+client_pub_ip: 30.1.1.1
+app_net: 40.1.1.1
+app_net_mask: 255.255.255.0
+client_id: 444
+bgp_as: 23000
+psk: XvGVwLhY4TvZveqGMm1N
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# ASA Config
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+#>>>>>>> Object Network Definitions########
+# object network bnym
+# subnet 10.1.1.0 255.255.255.0
+# object network mynet
+# subnet 6.1.1.0 255.255.255.0
+
+#>>>>>>> Access List Definitions   >>>>>>>>
+# access-list l2l_mynet extended permit ip 6.1.1.0 255.255.255.0 10.1.1.0 255.255.255.0
+# access-list allow-mynet extended permit ip 6.1.1.0 255.255.255.0 10.1.1.0 255.255.255.0
+
+#>>>>>>> NAT for VPN               >>>>>>>>
+# nat (inside,outside) source static mynet mynet destination static bnym bnym no-proxy-arp route-lookup
+# access-group allow-mynet in interface inside
+
+#>>>>>>> IPSEC Proposal            >>>>>>>>
+# crypto ipsec ikev2 ipsec-proposal AES256
+# protocol esp encryption aes-256
+# protocol esp integrity sha-1 md5
+
+#>>>>>>> Crypto Map Statements     >>>>>>>>
+# crypto map outside_map 1 match address l2l_mynet
+# crypto map outside_map 1 set peer 20.1.1.1
+# crypto map outside_map 1 set ikev2 ipsec-proposal AES256
+# crypto map outside_map interface outside
+
+#>>>>>>> IKEv2 Definitions         >>>>>>>>
+# crypto ikev2 policy 10
+# encryption aes-256
+# integrity sha256
+# group 19
+# prf sha256
+# lifetime seconds 86400
+# crypto ikev2 enable outside
