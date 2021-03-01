@@ -4,7 +4,8 @@
     - name: find role dirs and files
       find:
         paths: /var/lib/awx
+        patterns: "*network*"
         recurse: yes
       register: outlist
-    - debug: msg="{{ outlist }}"
+    - debug: msg="{{ outlist.files }}"
 #      with_items: "{{ outlist.files }}"
