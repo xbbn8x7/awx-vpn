@@ -3,8 +3,8 @@
   tasks:
     - name: find role dirs and files
       find:
-        paths: /var/lib/awx/vendor
-        patterns: "*network*"
+        paths: /var/lib/awx
+        patterns: "*palo*"
         recurse: yes
       register: outlist
     - debug: msg="{{ outlist.files }}"
