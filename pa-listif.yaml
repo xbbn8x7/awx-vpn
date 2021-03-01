@@ -6,30 +6,14 @@
 #    - role: paloaltonetworks
 
   tasks:
-    - name: check device readiness
-      panos_op:
-        ip_address: 10.148.254.20
-#        username: "nmsadmin"
-#        password: ""
-        #        cmd: 'show interface all'
-        cmd: 'show chassis-ready'
-      changed_when: false
-      register: result
-      until: result is not failed and (result.stdout | from_json).response.result == 'yes'
-      retries: 3
-      delay: 10
-    - debug:
-        var: result
-        verbosity: 2
-
     - name: list of interfaces
       panos_op:
         ip_address: 10.148.254.20
-#        username: "nmsadmin"
-#        password: ""
+        username: "nmsadmin"
+        password: "NiS01801"
         cmd: 'show interface all'
       register: int_result
+    - debug: msg="{{ int_result.stdout }}"
 
-    - debug:
-        var: int_result
-        verbosity: 2
+#        var: int_result
+#        verbosity: 2
