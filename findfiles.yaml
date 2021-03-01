@@ -3,7 +3,9 @@
   tasks:
     - name: find role dirs and files
       find:
-        paths: /var/lib/awx/vendor/awx_ansible_collectiions
+        paths: /var/lib/awx
         recurse: yes
       register: outlist
-    - debug: msg="{{ outlist }}"
+    - debug: 
+        msg="{{ [item.path] }}"
+      with_items: "{{ outlist.files }}"
