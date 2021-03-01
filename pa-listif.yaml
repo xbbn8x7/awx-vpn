@@ -2,8 +2,8 @@
 - hosts: 10.148.254.20
   connection: local
 
-  roles:
-    - role: paloaltonetworks
+#  roles:
+#    - role: paloaltonetworks
 
   tasks:
     - name: check device readiness
