@@ -3,7 +3,7 @@
   connection: local
 
   roles:
-    - role: PaloAltoNetworks.paloaltonetworks
+    - role: palopltopetworks.paloaltonetworks
 
   tasks:
     - name: check device readiness
