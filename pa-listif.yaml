@@ -12,7 +12,7 @@
       panos_op:
         ip_address: 10.148.254.20
         username: "nmsadmin"
-        password: "NiS01801"
+        password: ""
         cmd: 'show interface all'
       register: int_result
     - debug: msg="{{ int_result.stdout }}"
