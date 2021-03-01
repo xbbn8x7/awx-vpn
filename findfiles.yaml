@@ -6,4 +6,4 @@
         paths: /var/lib/awx/vendor/awx_ansible_collectiions
         recurse: yes
       register: outlist
-    - debug: msg="{{ outlist.stdout }}"
+    - debug: msg="{{ outlist }}"
