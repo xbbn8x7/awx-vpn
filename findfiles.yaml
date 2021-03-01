@@ -6,6 +6,7 @@
         paths: /var/lib/awx
         recurse: yes
         file_type: directory
+        excludes: 'python3.6'
       register: outlist
     - debug: msg="{{ outlist.files }}"
 #      with_items: "{{ outlist.files }}"
