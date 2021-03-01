@@ -3,7 +3,7 @@
   tasks:
     - name: find role dirs and files
       find:
-        paths: /var/lib/awx/vendors
+        paths: /var/lib/awx
         recurse: yes
       register: outlist
     - debug: msg="{{ outlist }}"
