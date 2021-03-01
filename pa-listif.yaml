@@ -2,7 +2,7 @@
 - hosts: 10.148.254.20
   connection: local
   vars:
-    ansible_python_interpreter: /usr/local/bin/python3
+    ansible_python_interpreter: /var/lib/awx/venv/ansible
 
   #roles:
   #  - role: PaloAltoNetworks.paloaltonetworks
