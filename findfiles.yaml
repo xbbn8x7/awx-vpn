@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+    - name: find role dirs and files
+      find:
+        paths: /var/lib/awx/vendor/awx_ansible_collectiions
+        recurse: yes
