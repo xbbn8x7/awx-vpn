@@ -3,7 +3,7 @@
   tasks:
     - name: find role dirs and files
       find:
-        paths: /var/lib/awx
+        paths: /var/lib/awx/vendor/awx_ansible_collections
         patterns: "*network*"
         recurse: yes
       register: outlist
