@@ -5,7 +5,7 @@
 #    ansible_python_interpreter: /var/lib/awx/venv/ansible/bin/python
 
   roles:
-    - role: paloaltonetworks.paloaltonetworks
+    - role: paloaltonetworks
 
   tasks:
     - name: list of interfaces
