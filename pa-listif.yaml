@@ -1,18 +1,18 @@
 ---
 - hosts: 10.148.254.20
   connection: local
-  vars:
-    ansible_python_interpreter: /var/lib/awx/venv/ansible/bin/python
+#  vars:
+#    ansible_python_interpreter: /var/lib/awx/venv/ansible/bin/python
 
   roles:
-    - role: PaloAltoNetworks.paloaltonetworks
+    - role: paloaltonetworks.paloaltonetworks
 
   tasks:
     - name: list of interfaces
       panos_op:
         ip_address: 10.148.254.20
         username: "nmsadmin"
-        password: ""
+        password: "NiS01801"
         cmd: 'show interface all'
       register: int_result
     - debug: msg="{{ int_result.stdout }}"
