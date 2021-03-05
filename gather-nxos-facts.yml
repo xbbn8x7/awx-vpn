@@ -16,6 +16,6 @@
       nxos_command:
 #        username: "{{ cisco['username'] }}"
 #        password: "{{ cisco['password'] }}"
-        commands: show run
+        commands: show ver
         timeout: 30
       
