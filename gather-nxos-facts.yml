@@ -7,7 +7,7 @@
   vars:
     - creds: "{{ lookup('hashi_vault', 'secret=tst2/data/cisco token=s.fCYhDnkRL32nSCYFa7pZG2i2 url=http://10.80.23.81:8200') }}"
 
- tasks:
+  tasks:
     - name: set Cisco creds
       set_fact:
         cisco: "{{ creds['data'] }}"
