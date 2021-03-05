@@ -12,8 +12,6 @@
       set_fact:
         cisco: "{{ creds['data'] }}"
 
-  tasks:
-
     - name: Get nxos facts
       nxos_command:
         username: "{{ cisco['username'] }}"
