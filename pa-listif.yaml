@@ -4,15 +4,27 @@
 #  vars:
 #    ansible_python_interpreter: /var/lib/awx/venv/ansible/bin/python
 
-  roles:
-    - role: paloaltonetworks.paloaltonetworks
+  collections:
+    - paloaltonetworks.panos
+#  tasks:
+#  - name: Get the system info
+#    panos_op:
+#      provider: '{{ provider }}'
+#      cmd: 'show system info'
+#    register: res
+#  - debug:
+#      msg: '{{ res.stdout }}'
+
+
+#  roles:
+#    - role: paloaltonetworks.paloaltonetworks
 
   tasks:
     - name: list of interfaces
       panos_op:
         ip_address: 10.148.254.20
         username: "nmsadmin"
-        password: ""
+        password: "NiS01801"
         cmd: 'show interface all'
       register: int_result
     - debug: msg="{{ int_result.stdout }}"
