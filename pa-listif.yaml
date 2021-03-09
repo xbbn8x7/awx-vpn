@@ -4,7 +4,7 @@
 #  vars:
 #    ansible_python_interpreter: /var/lib/awx/venv/ansible/bin/python
   collections:
-    - paloaltonetworks.panos
+    - ansible_collections.paloaltonetworks.panos
 #  tasks:
 #  - name: Get the system info
 #    panos_op:
