@@ -3,10 +3,10 @@
   tasks:
     - name: find role dirs and files
       find:
-        paths: /
+        paths: /var/lib/awx/
         recurse: yes
-        file_type: directory
-        patterns: '*aloaltonetwor*'
+        file_type: file
+        patterns: '*listf*'
 #        excludes: 'python3.6'
       register: outlist
     - debug: msg="{{ outlist.files }}"
