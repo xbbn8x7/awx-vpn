@@ -3,11 +3,10 @@
   connection: local
 #  vars:
 #    ansible_python_interpreter: /var/lib/awx/venv/ansible/bin/python
-
-  collections:
-    - name: "https://github.com/xbbn8x7/awx-vpn.git"
-      type: git
-      version: master
+#  collections:
+#    - name: "https://github.com/xbbn8x7/awx-vpn.git"
+#      type: git
+#      version: master
 #  tasks:
 #  - name: Get the system info
 #    panos_op:
@@ -16,20 +15,16 @@
 #    register: res
 #  - debug:
 #      msg: '{{ res.stdout }}'
-
-
 #  roles:
 #    - role: paloaltonetworks
-
   tasks:
     - name: list of interfaces
       panos_op:
         ip_address: 10.148.254.20
         username: "nmsadmin"
-        password: ""
+        password: "NiS01801"
         cmd: 'show interface all'
       register: int_result
     - debug: msg="{{ int_result.stdout }}"
-
 #        var: int_result
 #        verbosity: 2
