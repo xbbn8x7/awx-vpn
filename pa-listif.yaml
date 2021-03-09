@@ -5,7 +5,7 @@
 #    ansible_python_interpreter: /var/lib/awx/venv/ansible/bin/python
 
   collections:
-    - paloaltonetworks.panos
+    - paloaltonetworks
 #  tasks:
 #  - name: Get the system info
 #    panos_op:
@@ -17,7 +17,7 @@
 
 
   roles:
-    - role: var.lib.awx.paloaltonetworks.panos
+    - role: paloaltonetworks
 
   tasks:
     - name: list of interfaces
