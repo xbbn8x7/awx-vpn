@@ -6,7 +6,7 @@
         paths: /var/lib/awx
         recurse: yes
         file_type: directory
-        patterns: '*ollectio*'
+        patterns: '*alax*'
 #        excludes: 'python3.6'
       register: outlist
     - debug: msg="{{ outlist.files }}"
