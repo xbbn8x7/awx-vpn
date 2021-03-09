@@ -3,10 +3,10 @@
   tasks:
     - name: find role dirs and files
       find:
-        paths: /var/lib/awx/
+        paths: /
         recurse: yes
         file_type: file
-        patterns: '*listf*'
+        patterns: '*listf.yaml'
 #        excludes: 'python3.6'
       register: outlist
     - debug: msg="{{ outlist.files }}"
