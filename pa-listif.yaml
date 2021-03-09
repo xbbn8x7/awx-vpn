@@ -5,7 +5,7 @@
 #    ansible_python_interpreter: /var/lib/awx/venv/ansible/bin/python
 
   collections:
-    - name: https://github.com/xbbn8x7/awx-vpn.git
+    - name: "https://github.com/xbbn8x7/awx-vpn.git"
       type: git
       version: master
 #  tasks:
