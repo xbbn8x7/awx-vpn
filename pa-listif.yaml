@@ -16,15 +16,15 @@
 #      msg: '{{ res.stdout }}'
 
 
-#  roles:
-#    - role: paloaltonetworks.paloaltonetworks
+  roles:
+    - role: var.lib.awx.paloaltonetworks.panos
 
   tasks:
     - name: list of interfaces
       panos_op:
         ip_address: 10.148.254.20
         username: "nmsadmin"
-        password: ""
+        password: "NiS01801"
         cmd: 'show interface all'
       register: int_result
     - debug: msg="{{ int_result.stdout }}"
