@@ -5,7 +5,9 @@
 #    ansible_python_interpreter: /var/lib/awx/venv/ansible/bin/python
 
   collections:
-    - paloaltonetworks
+    - name: https://github.com/xbbn8x7/awx-vpn.git
+      type: git
+      version: master
 #  tasks:
 #  - name: Get the system info
 #    panos_op:
@@ -16,8 +18,8 @@
 #      msg: '{{ res.stdout }}'
 
 
-  roles:
-    - role: paloaltonetworks
+#  roles:
+#    - role: paloaltonetworks
 
   tasks:
     - name: list of interfaces
