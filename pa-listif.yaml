@@ -3,8 +3,8 @@
   connection: local
 #  vars:
 #    ansible_python_interpreter: /var/lib/awx/venv/ansible/bin/python
-  collections:
-    - awx-vpn.ansible_collections.paloaltonetworks.panos
+#  collections:
+#    - paloaltonetworks.panos
 #  tasks:
 #  - name: Get the system info
 #    panos_op:
