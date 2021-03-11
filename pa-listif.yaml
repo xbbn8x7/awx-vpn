@@ -1,26 +1,19 @@
 ---
 - hosts: 10.148.254.20
   connection: local
-#  vars:
-#    ansible_python_interpreter: /var/lib/awx/venv/ansible/bin/python
-#  collections:
-#    - paloaltonetworks.panos
-#  tasks:
-#  - name: Get the system info
-#    panos_op:
-#      provider: '{{ provider }}'
-#      cmd: 'show system info'
-#    register: res
-#  - debug:
-#      msg: '{{ res.stdout }}'
-#  roles:
-#    - role: paloaltonetworks
+  vars:
+    - creds: "{{ lookup('hashi_vault', 'secret=tst2/data/cisco token=s.s67Xlia8FpDTPOiAKBg4LZRx url=http://10.80.23.81:8200') }}"
+
   tasks:
+    - name: set Cisco creds
+      set_fact:
+        cisco: "{{ creds['data'] }}"
+
     - name: list of interfaces
       panos_op:
         ip_address: 10.148.254.20
-        username: "nmsadmin"
-        password: "NiS01801"
+        username: "{{ cisco['username'] }}"
+        password: "{{ cisco['password'] }}"
         cmd: 'show interface all'
       register: int_result
     - debug: msg="{{ int_result.stdout }}"
