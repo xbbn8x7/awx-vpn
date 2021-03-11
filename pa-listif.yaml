@@ -1,5 +1,6 @@
 ---
-- hosts: 10.148.254.20
+- hosts: PaloAlto
+#- hosts: 10.148.254.20
   connection: local
   vars:
     - creds: "{{ lookup('hashi_vault', 'secret=tst2/data/cisco token=s.s67Xlia8FpDTPOiAKBg4LZRx url=http://10.80.23.81:8200') }}"
@@ -11,7 +12,7 @@
 
     - name: list of interfaces
       panos_op:
-        ip_address: 10.148.254.20
+        ip_address: "{{ inventory_hostname }}"
         username: "{{ cisco['username'] }}"
         password: "{{ cisco['password'] }}"
         cmd: 'show interface all'
