@@ -19,4 +19,4 @@
         commands: show ver
         timeout: 30
       register: ver_out
-    -debug: msg="{{ ver_out.stdout }}"
+    - debug: msg="{{ ver_out.stdout }}"
