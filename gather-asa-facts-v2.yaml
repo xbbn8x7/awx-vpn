@@ -13,17 +13,17 @@
       set_fact:
         cisco: "{{ creds['data'] }}"
 
-   - name: show run
-     asa_command:
-       username: "{{ cisco['username'] }}"
-       password: "{{ cisco['password'] }}"
-       commands: show run
-     register: run
-     become: yes
-     tags:
-       - show_run
+    - name: show run
+      asa_command:
+        username: "{{ cisco['username'] }}"
+        password: "{{ cisco['password'] }}"
+        commands: show run
+      register: run
+      become: yes
+      tags:
+        - show_run
 
-   - debug:
-       msg: "{{run.stdout[0]}}"
-     tags:
-       - show_run
+    - debug:
+        msg: "{{run.stdout[0]}}"
+      tags:
+        - show_run
