@@ -4,8 +4,8 @@
   connection: local 
   become: yes
   become_method: enable
-#  vars:
-#    - creds: "{{ lookup('hashi_vault', 'secret=tst2/data/cisco token=s.fCYhDnkRL32nSCYFa7pZG2i2 url=http://10.80.23.81:8200') }}"
+  vars:
+    - creds: "{{ lookup('hashi_vault', 'secret=tst2/data/cisco token=s.s67Xlia8FpDTPOiAKBg4LZRx url=http://10.80.23.81:8200') }}"
 
   tasks:
 #    - name: set Cisco creds
