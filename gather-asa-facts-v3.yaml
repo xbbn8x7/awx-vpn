@@ -6,7 +6,7 @@
   become: yes
   become_method: enable
   vars:
-    pa_api:
+    asa_api:
       - creds: "{{ lookup('hashi_vault', 'secret=tst2/data/cisco token=s.s67Xlia8FpDTPOiAKBg4LZRx url=http://10.80.23.81:8200') }}"
         set_fact:
           cisco: "{{ creds['data'] }}"
@@ -16,7 +16,7 @@
       - name: show run
         asa_command:
           commands: show run
-          provider: "{{ pa_api }}"
+          provider: "{{ asa_api }}"
         register: run
         become: yes
         tags:
