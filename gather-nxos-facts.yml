@@ -14,8 +14,8 @@
 
     - name: Get nxos facts
       nxos_command:
-#        username: "{{ cisco['username'] }}"
-#        password: "{{ cisco['password'] }}"
+        username: "{{ cisco['username'] }}"
+        password: "{{ cisco['password'] }}"
         commands: show ver
         timeout: 30
       
