@@ -13,6 +13,7 @@
         username: "{{ cisco['username'] }}"
         password: "{{ cisco['password'] }}"
 
+  tasks:
       - name: show run
         asa_command:
           commands: show run
