@@ -1,0 +1,28 @@
+---
+- hosts: ASA
+  gather_facts: yes
+  user: nmsadmin
+  connection: local
+  become: yes
+  become_method: enable
+  vars:
+    pa_api:
+      - creds: "{{ lookup('hashi_vault', 'secret=tst2/data/cisco token=s.s67Xlia8FpDTPOiAKBg4LZRx url=http://10.80.23.81:8200') }}"
+        set_fact:
+          cisco: "{{ creds['data'] }}"
+        username: "{{ cisco['username'] }}"
+        password: "{{ cisco['password'] }}"
+
+      - name: show run
+        asa_command:
+          commands: show run
+          provider: "{{ pa_api }}"
+        register: run
+        become: yes
+        tags:
+          - show_run
+
+      - debug:
+          msg: "{{run.stdout[0]}}"
+        tags:
+          - show_run
