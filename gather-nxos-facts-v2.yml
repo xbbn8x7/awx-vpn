@@ -6,7 +6,7 @@
   become_method: enable
 
   vault_secret: tst2/data/cisco
-  vault_token: verysecret
+  vault_token: s.s67Xlia8FpDTPOiAKBg4LZRx
   vault_url: http://10.80.23.81:8200
   vault_options: "secret={{ vault_secret }} token={{ vault_token }} url={{ vault_url }}"
 
