@@ -1,0 +1,8 @@
+---
+- hosts: nxos
+  gather_facts: yes
+  connection: local
+
+  tasks:
+    - name: Add host keys
+      shell: "ssh-keyscan -H {{ inventory_hostname }} >> ~/.ssh/known_hosts"
