@@ -1,7 +1,7 @@
 ---
 - hosts: NXOS
   gather_facts: yes
-  ansible_connection: network_cli
+  connection: network_cli
   become: yes
   become_method: enable
 
