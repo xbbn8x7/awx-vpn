@@ -5,25 +5,23 @@
   connection: local
   become: yes
   become_method: enable
-  vars:
-    asa_api:
-      - creds: "{{ lookup('hashi_vault', 'secret=tst2/data/cisco token=s.s67Xlia8FpDTPOiAKBg4LZRx url=http://10.80.23.81:8200') }}"
-        set_fact:
-          cisco: "{{ creds['data'] }}"
-        username: "{{ cisco['username'] }}"
-        password: "{{ cisco['password'] }}"
+   vars:
+    vault_secret: tst2/data/cisco
+    vault_token: s.s67Xlia8FpDTPOiAKBg4LZRx
+    vault_url: http://10.80.23.81:8200
+    vault_options: "secret={{ vault_secret }} token={{ vault_token }} url={{ vault_url }}"
+
+    creds: "{{ lookup('hashi_vault', vault_options).data }}"
+
+    ansible_user: "{{ creds.username }}"
+    ansible_password: "{{ creds.password }}"
 
   tasks:
       - name: show run
         asa_command:
           commands: show run
-          provider: "{{ asa_api }}"
-        register: run
+        register: sh_run
         become: yes
-        tags:
-          - show_run
-
-      - debug:
-          msg: "{{run.stdout[0]}}"
-        tags:
-          - show_run
+      
+      - name: show ver
+        debug: msg="{{ sh_run.stdout }}"
