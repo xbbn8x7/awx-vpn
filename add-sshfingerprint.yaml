@@ -1,5 +1,5 @@
 ---
-- hosts: nxos
+- hosts: NXOS
   gather_facts: yes
   connection: local
 
