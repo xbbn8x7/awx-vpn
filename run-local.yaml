@@ -3,7 +3,7 @@
   connection: local
   
   tasks:
-      - shell: "ssh ansible@10.148.254.23"
+      - shell: "ssh ansible@10.80.29.129"
         register: sh_run      
       - name: show out
         debug: msg="{{ sh_run.stdout }}"
